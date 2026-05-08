@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>점메추 🎡</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2ecc71;
+    --green-dark: #27ae60;
+    --orange: #e67e22;
+    --orange-dark: #d35400;
+    --bg: #f5f5f0;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-muted: #888;
+    --border: #e8e8e8;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 90px;
+  }
+
+  /* 헤더 */
+  .header {
+    background: var(--green-dark);
+    padding: 28px 20px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px; left: -20px;
+    width: 80px; height: 80px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  .header-emoji { font-size: 36px; margin-bottom: 6px; }
+  .header h1 { font-size: 24px; font-weight: 900; color: white; letter-spacing: -0.5px; }
+  .header p  { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
+
+  /* 탭 */
+  .tabs {
+    display: flex;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .tab {
+    flex: 1; padding: 15px 0;
+    text-align: center;
+    font-size: 14px; font-weight: 700;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .tab.active { color: var(--green-dark); border-bottom-color: var(--green-dark); }
+
+  /* 페이지 */
+  .page { display: none; padding: 16px; }
+  .page.active { display: block; }
+
+  /* 카드 */
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .card-title {
+    font-size: 15px; font-weight: 700;
+    color: var(--text); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* 폼 */
+  .field { margin-bottom: 14px; }
+  .field:last-child { margin-bottom: 0; }
+  label {
+    display: block;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  select, input, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #fafafa;
+    color: var(--text);
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+  select:focus, input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--green);
+    background: white;
+  }
+  textarea { height: 72px; resize: none; line-height: 1.5; }
+
+  /* 별점 */
+  .stars { display: flex; gap: 6px; margin-top: 4px; }
+  .star {
+    font-size: 30px; cursor: pointer;
+    filter: grayscale(1) opacity(0.4);
+    transition: filter 0.15s, transform 0.1s;
+    user-select: none;
+  }
+  .star.on { filter: grayscale(0) opacity(1); }
+  .star:active { transform: scale(1.3); }
+
+  /* 버튼 */
+  .btn {
+    width: 100%; padding: 15px;
+    border: none; border-radius: 12px;
+    font-size: 16px; font-weight: 700;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
+    letter-spacing: -0.3px;
+  }
+  .btn:active { transform: scale(0.97); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-green {
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    color: white;
+    box-shadow: 0 4px 14px rgba(46,204,113,0.35);
+  }
+  .btn-orange {
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    color: white;
+    box-shadow: 0 4px 14px rgba(230,126,34,0.35);
+  }
+  .btn-gray {
+    background: #ecf0f1; color: #7f8c8d;
+    font-size: 13px; padding: 12px;
+    box-shadow: none;
+  }
+
+  /* 추천 결과 */
+  .result-card {
+    background: white;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    animation: slideUp 0.3s ease both;
+  }
+  .result-card:nth-child(2) { animation-delay: 0.07s; }
+  .result-card:nth-child(3) { animation-delay: 0.14s; }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .result-header {
+    padding: 10px 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rank-1 .result-header { background: linear-gradient(135deg, #e67e22, #d35400); }
+  .rank-2 .result-header { background: linear-gradient(135deg, #7f8c8d, #636e72); }
+  .rank-3 .result-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); }
+  .rank-badge {
+    font-size: 20px;
+  }
+  .rank-label {
+    font-size: 13px; font-weight: 700; color: white; opacity: 0.9;
+  }
+  .result-body { padding: 16px; }
+  .result-menu { font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; }
+  .result-rest { font-size: 14px; color: #555; margin-top: 4px; font-weight: 500; }
+  .result-meta { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+  .meta-chip {
+    font-size: 12px; padding: 4px 10px;
+    border-radius: 20px; font-weight: 500;
+  }
+  .chip-rating { background: #fff9e6; color: #f39c12; }
+  .chip-tags   { background: #eafaf1; color: #27ae60; }
+  .chip-memo   { background: #eaf4fb; color: #2980b9; }
+
+  /* 총평 */
+  .total-comment {
+    text-align: center; padding: 16px;
+    font-size: 14px; color: var(--text-muted);
+    background: white; border-radius: var(--radius);
+    margin-top: 4px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    animation: slideUp 0.3s ease 0.2s both;
+  }
+
+  /* 로딩 */
+  .loading {
+    text-align: center; padding: 40px 20px;
+    color: var(--text-muted);
+  }
+  .spinner {
+    width: 40px; height: 40px; margin: 0 auto 14px;
+    border: 4px solid var(--border);
+    border-top-color: var(--green);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading p { font-size: 14px; }
+
+  /* 메시지 */
+  .msg {
+    padding: 12px 14px; border-radius: 10px;
+    font-size: 13px; margin-top: 12px;
+    display: none; font-weight: 500;
+    animation: slideUp 0.2s ease;
+  }
+  .msg.success { background: #eafaf1; color: #1e8449; border-left: 4px solid var(--green); }
+  .msg.error   { background: #fdedec; color: #922b21; border-left: 4px solid #e74c3c; }
+
+  /* 히스토리 */
+  .history-item {
+    display: flex; align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-date { font-size: 11px; color: var(--text-muted); min-width: 50px; }
+  .history-info { flex: 1; }
+  .history-menu { font-size: 14px; font-weight: 700; }
+  .history-rest { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .history-stars { font-size: 12px; }
+
+  .empty-state {
+    text-align: center; padding: 30px;
+    color: var(--text-muted); font-size: 14px;
+  }
+  .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
+
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-emoji">🍱</div>
+  <h1>점메추</h1>
+  <p>오늘 뭐 먹을지 고민될 때</p>
+</div>
+
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('recommend')">🎯 추천받기</div>
+  <div class="tab" onclick="switchTab('record')">📝 기록하기</div>
+  <div class="tab" onclick="switchTab('history')">📋 기록 목록</div>
+</div>
+
+<!-- ===== 추천 탭 ===== -->
+<div id="page-recommend" class="page active">
+  <div class="card">
+    <div class="card-title">🌤 지금 상태를 알려주세요</div>
+
+    <div class="field">
+      <label>날씨</label>
+      <select id="weather">
+        <option value="맑고 더운 날씨">☀️ 맑고 더움</option>
+        <option value="맑고 선선한 날씨">🌤️ 맑고 선선함</option>
+        <option value="흐린 날씨">☁️ 흐림</option>
+        <option value="비 오는 날씨">🌧️ 비</option>
+        <option value="춥고 추운 날씨">🌨️ 춥고 추움</option>
+        <option value="바람이 많이 부는 날씨">💨 바람</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>기분 / 컨디션</label>
+      <select id="mood">
+        <option value="피곤하고 지침">😴 피곤함</option>
+        <option value="스트레스 받음">😤 스트레스</option>
+        <option value="보통">😐 보통</option>
+        <option value="기분 좋고 활기참">😊 기분 좋음</option>
+        <option value="배가 많이 고픔">😋 배고픔</option>
+        <option value="입맛이 없음">😑 입맛 없음</option>
+        <option value="몸이 좋지 않음">🤒 몸이 안 좋음</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>기타 조건 <span style="font-weight:400;text-transform:none">(선택)</span></label>
+      <textarea id="extra" placeholder="예: 빨리 먹어야 해, 맵게 먹고 싶어..."></textarea>
+    </div>
+
+    <button class="btn btn-green" id="rec-btn" onclick="getRecommendation()">
+      추천받기 🎯
+    </button>
+  </div>
+
+  <div id="rec-result"></div>
+
+  <div class="divider"></div>
+  <button class="btn btn-gray" onclick="initSheets()">🔧 시트 초기화 (최초 1회)</button>
+</div>
+
+<!-- ===== 기록 탭 ===== -->
+<div id="page-record" class="page">
+  <div class="card">
+    <div class="card-title">📝 오늘 점심 기록하기</div>
+
+    <div class="field">
+      <label>먹은 메뉴</label>
+      <input type="text" id="rec-menu" placeholder="예: 짜장면">
+    </div>
+
+    <div class="field">
+      <label>식당명</label>
+      <input type="text" id="rec-restaurant" placeholder="예: 김씨네 중국집">
+    </div>
+
+    <div class="field">
+      <label>만족도</label>
+      <div class="stars" id="stars">
+        <span class="star" onclick="setStar(1)">⭐</span>
+        <span class="star" onclick="setStar(2)">⭐</span>
+        <span class="star" onclick="setStar(3)">⭐</span>
+        <span class="star" onclick="setStar(4)">⭐</span>
+        <span class="star" onclick="setStar(5)">⭐</span>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>날씨</label>
+      <select id="rec-weather">
+        <option value="맑음">☀️ 맑음</option>
+        <option value="흐림">☁️ 흐림</option>
+        <option value="비">🌧️ 비</option>
+        <option value="추움">🌨️ 추움</option>
+        <option value="더움">🌡️ 더움</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>기분</label>
+      <select id="rec-mood">
+        <option value="피곤함">😴 피곤함</option>
+        <option value="보통">😐 보통</option>
+        <option value="좋음">😊 좋음</option>
+        <option value="스트레스">😤 스트레스</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>메모 <span style="font-weight:400;text-transform:none">(선택)</span></label>
+      <textarea id="rec-memo" placeholder="예: 오늘은 좀 짰다, 서비스 좋았음..."></textarea>
+    </div>
+
+    <button class="btn btn-orange" id="save-btn" onclick="saveRecord()">
+      기록 저장하기 ✅
+    </button>
+    <div class="msg" id="save-msg"></div>
+  </div>
+</div>
+
+<!-- ===== 히스토리 탭 ===== -->
+<div id="page-history" class="page">
+  <div class="card">
+    <div class="card-title">📋 최근 식사 기록</div>
+    <div id="history-list">
+      <div class="empty-state">
+        <div class="icon">🍽️</div>
+        <p>기록 탭에서 불러오기를 눌러주세요</p>
+      </div>
+    </div>
+    <button class="btn btn-green" style="margin-top:16px" onclick="loadHistory()">
+      기록 불러오기 🔄
+    </button>
+  </div>
+</div>
+
+<script>
+// ===== 상태 =====
+var selectedStar = 3;
+var mealHistory  = [];
+
+// ===== 로컬 저장소 (메뉴목록 + 식사기록) =====
+function getMenuList() {
+  try {
+    return JSON.parse(localStorage.getItem('menuList') || '[]');
+  } catch(e) { return []; }
+}
+
+function getMealHistory() {
+  try {
+    return JSON.parse(localStorage.getItem('mealHistory') || '[]');
+  } catch(e) { return []; }
+}
+
+function saveMealHistory(history) {
+  localStorage.setItem('mealHistory', JSON.stringify(history));
+}
+
+// ===== 초기 메뉴 데이터 =====
+function initSheets() {
+  if (!confirm("샘플 메뉴 데이터를 초기화할까요?\n기존 메뉴 목록이 초기화됩니다.")) return;
+
+  const sampleMenus = [
+    { menu:"순대국밥", category:"한식", tags:"따뜻함,국물,든든함", restaurant:"할매국밥",       rating:4,   memo:"국물 진함, 양 많음" },
+    { menu:"돼지국밥", category:"한식", tags:"따뜻함,국물,든든함", restaurant:"할매국밥",       rating:4,   memo:"" },
+    { menu:"짜장면",   category:"중식", tags:"든든함,면류",         restaurant:"김씨네 중국집", rating:4.5, memo:"점심 할인 있음" },
+    { menu:"짬뽕",     category:"중식", tags:"국물,매운맛,해산물", restaurant:"김씨네 중국집", rating:4,   memo:"" },
+    { menu:"짜장면",   category:"중식", tags:"든든함,면류",         restaurant:"명동반점",       rating:3.5, memo:"양이 좀 적음" },
+    { menu:"초밥",     category:"일식", tags:"신선함,해산물,담백함",restaurant:"스시로",         rating:3.5, memo:"가격 좀 있음" },
+    { menu:"라멘",     category:"일식", tags:"따뜻함,국물,면류",   restaurant:"스시로",         rating:3.5, memo:"" },
+    { menu:"제육덮밥", category:"한식", tags:"간단함,든든함,빠름", restaurant:"한솥도시락",     rating:3,   memo:"빠르고 저렴" },
+    { menu:"크림파스타",category:"양식",tags:"면류,크리미,담백함", restaurant:"파스타공방",     rating:4,   memo:"혼밥하기 좋음" },
+    { menu:"토마토파스타",category:"양식",tags:"면류,산뜻함",      restaurant:"파스타공방",     rating:4,   memo:"" },
+  ];
+
+  localStorage.setItem('menuList', JSON.stringify(sampleMenus));
+  alert("✅ 초기화 완료!\n메뉴목록이 샘플 데이터로 채워졌어요.\n직접 데이터를 추가하려면 코드의 sampleMenus 배열을 수정하세요.");
+}
+
+// ===== 탭 전환 =====
+function switchTab(name) {
+  const names = ['recommend','record','history'];
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (name === 'history') loadHistory();
+}
+
+// ===== 별점 =====
+function setStar(n) {
+  selectedStar = n;
+  document.querySelectorAll('.star').forEach((el, i) => {
+    el.classList.toggle('on', i < n);
+  });
+}
+
+// 초기 별점
+setStar(3);
+
+// ===== 추천 로직 =====
+function getRecommendation() {
+  const weather = document.getElementById('weather').value;
+  const mood    = document.getElementById('mood').value;
+  const extra   = document.getElementById('extra').value;
+  const btn     = document.getElementById('rec-btn');
+  const result  = document.getElementById('rec-result');
+
+  const items = getMenuList();
+  if (items.length === 0) {
+    result.innerHTML = `<div class="card" style="color:#e74c3c">❌ 메뉴 목록이 없어요.<br>아래 '시트 초기화' 버튼을 눌러주세요.</div>`;
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = '분석 중... ⏳';
+  result.innerHTML = `<div class="loading"><div class="spinner"></div><p>최근 기록을 분석하고 있어요</p></div>`;
+
+  // 약간의 딜레이로 자연스럽게
+  setTimeout(function() {
+    try {
+      const history = getMealHistory();
+      const now = new Date();
+
+      // 최근 3일 조합
+      const recent3 = history
+        .filter(h => (now - new Date(h.date)) < 3 * 86400000)
+        .map(h => h.restaurant + '||' + h.menu);
+
+      // 14일 빈도
+      const freq = {};
+      history
+        .filter(h => (now - new Date(h.date)) < 14 * 86400000)
+        .forEach(h => {
+          const k = h.restaurant + '||' + h.menu;
+          freq[k] = (freq[k] || 0) + 1;
+        });
+
+      let candidates = items
+        .map(i => Object.assign({}, i, {
+          comboKey: i.restaurant + '||' + i.menu,
+          freq: freq[i.restaurant + '||' + i.menu] || 0
+        }))
+        .filter(i => !recent3.includes(i.comboKey))
+        .sort(function(a, b) {
+          if (a.freq !== b.freq) return a.freq - b.freq;
+          return parseFloat(b.rating) - parseFloat(a.rating);
+        });
+
+      if (candidates.length < 3) {
+        var extras = items.filter(i => !candidates.find(c => c.comboKey === i.restaurant + '||' + i.menu));
+        candidates = candidates.concat(extras);
+      }
+
+      candidates.sort(() => Math.random() - 0.5);
+      var picks = candidates.slice(0, 3);
+
+      renderResult(picks);
+
+      // 추천기록 로컬 저장
+      var recHistory = JSON.parse(localStorage.getItem('recHistory') || '[]');
+      recHistory.unshift({
+        date: new Date().toISOString(),
+        weather: weather, mood: mood,
+        picks: picks.map(p => p.restaurant + '-' + p.menu)
+      });
+      localStorage.setItem('recHistory', JSON.stringify(recHistory.slice(0, 50)));
+
+    } catch(e) {
+      result.innerHTML = `<div class="card" style="color:#e74c3c">❌ 오류: ${e.message}</div>`;
+    }
+
+    btn.disabled = false;
+    btn.textContent = '다시 추천받기 🔄';
+  }, 600);
+}
+
+function renderResult(picks) {
+  const rankBadge = ['🥇','🥈','🥉'];
+  const rankLabel = ['1순위','2순위','3순위'];
+  const rankClass = ['rank-1','rank-2','rank-3'];
+
+  var html = picks.map(function(p, i) {
+    var stars = '⭐'.repeat(Math.round(Number(p.rating)));
+    return `
+      <div class="result-card ${rankClass[i]}">
+        <div class="result-header">
+          <span class="rank-badge">${rankBadge[i]}</span>
+          <span class="rank-label">${rankLabel[i]}</span>
+        </div>
+        <div class="result-body">
+          <div class="result-menu">${p.menu}</div>
+          <div class="result-rest">🏠 ${p.restaurant}</div>
+          <div class="result-meta">
+            <span class="meta-chip chip-rating">${stars} ${p.rating}</span>
+            <span class="meta-chip chip-tags">🏷 ${p.tags}</span>
+            ${p.memo ? `<span class="meta-chip chip-memo">💬 ${p.memo}</span>` : ''}
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  html += `<div class="total-comment">🍱 오늘도 맛있는 점심 드세요!</div>`;
+  document.getElementById('rec-result').innerHTML = html;
+}
+
+// ===== 기록 저장 =====
+function saveRecord() {
+  var menu       = document.getElementById('rec-menu').value.trim();
+  var restaurant = document.getElementById('rec-restaurant').value.trim();
+
+  if (!menu || !restaurant) {
+    showMsg('메뉴와 식당명을 입력해주세요.', 'error');
+    return;
+  }
+
+  var btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.textContent = '저장 중...';
+
+  var history = getMealHistory();
+  history.unshift({
+    date:         new Date().toISOString(),
+    menu:         menu,
+    restaurant:   restaurant,
+    satisfaction: selectedStar,
+    weather:      document.getElementById('rec-weather').value,
+    mood:         document.getElementById('rec-mood').value,
+    memo:         document.getElementById('rec-memo').value
+  });
+  saveMealHistory(history.slice(0, 200));
+
+  setTimeout(function() {
+    btn.disabled = false;
+    btn.textContent = '기록 저장하기 ✅';
+    showMsg('✅ 저장 완료! 다음 추천에 반영됩니다.', 'success');
+    document.getElementById('rec-menu').value = '';
+    document.getElementById('rec-restaurant').value = '';
+    document.getElementById('rec-memo').value = '';
+    setStar(3);
+  }, 300);
+}
+
+function showMsg(text, type) {
+  var el = document.getElementById('save-msg');
+  el.textContent = text;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+  setTimeout(function() { el.style.display = 'none'; }, 3000);
+}
+
+// ===== 히스토리 =====
+function loadHistory() {
+  var history = getMealHistory();
+  var el = document.getElementById('history-list');
+
+  if (history.length === 0) {
+    el.innerHTML = `<div class="empty-state"><div class="icon">🍽️</div><p>아직 기록이 없어요</p></div>`;
+    return;
+  }
+
+  el.innerHTML = history.slice(0, 30).map(function(h) {
+    var d = new Date(h.date);
+    var dateStr = (d.getMonth()+1) + '/' + d.getDate();
+    var stars = '⭐'.repeat(h.satisfaction || 0);
+    return `
+      <div class="history-item">
+        <div class="history-date">${dateStr}</div>
+        <div class="history-info">
+          <div class="history-menu">${h.menu}</div>
+          <div class="history-rest">${h.restaurant}${h.memo ? ' · ' + h.memo : ''}</div>
+        </div>
+        <div class="history-stars">${stars}</div>
+      </div>`;
+  }).join('');
+}
+</script>
+</body>
+</html>
