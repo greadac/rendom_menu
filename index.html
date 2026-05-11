@@ -270,7 +270,7 @@
     <div class="setting-block">
       <div class="setting-label">빈 상태로 초기화</div>
       <button class="btn btn-gray" onclick="initSheets(false)">🗂️ 빈 상태로 초기화</button>
-      <div class="setting-desc">메뉴 목록을 비워요. HTML 파일에 직접 식당을 추가할 때 사용하세요.</div>
+      <div class="setting-desc">메뉴 목록을 비우고 식사 기록 기반으로 추천받을 때 사용하세요.</div>
     </div>
   </div>
 
@@ -322,15 +322,7 @@
       </div>
     </div>
     <div class="guide-step">
-      <div class="guide-num" style="background:linear-gradient(135deg,#9b59b6,#8e44ad)">4</div>
-      <div class="guide-content">
-        <div class="guide-title">내 식당 추가하기</div>
-        <div class="guide-desc">HTML 파일을 메모장으로 열고 <strong>sampleMenus</strong> 배열에 추가하면 돼요.</div>
-        <div class="guide-code">{ menu:"메뉴명", category:"한식",<br>&nbsp;&nbsp;tags:"따뜻함,국물", restaurant:"식당명",<br>&nbsp;&nbsp;rating:4, memo:"메모" },</div>
-      </div>
-    </div>
-    <div class="guide-step">
-      <div class="guide-num" style="background:linear-gradient(135deg,#7f8c8d,#636e72)">5</div>
+      <div class="guide-num" style="background:linear-gradient(135deg,#7f8c8d,#636e72)">4</div>
       <div class="guide-content">
         <div class="guide-title">데이터 저장 위치</div>
         <div class="guide-desc">기록은 이 기기 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 다른 기기에서 열면 기록이 없어 보여요.</div>
@@ -477,9 +469,25 @@ function getRecommendation() {
   var result  = document.getElementById('rec-result');
   var items   = getMenuList();
 
+  // 메뉴 목록이 비어있으면 식사 기록에서 자동 생성
   if (items.length === 0) {
-    result.innerHTML = '<div class="card" style="color:#e74c3c">❌ 메뉴 목록이 없어요.<br>⚙️ 설정 탭에서 초기화해주세요.</div>';
-    return;
+    var histAll = getMealHistory();
+    if (histAll.length === 0) {
+      result.innerHTML = '<div class="card" style="color:#e74c3c">❌ 추천할 메뉴가 없어요.<br>⚙️ 설정 탭에서 초기화하거나<br>📝 기록 탭에서 식사를 먼저 기록해주세요.</div>';
+      return;
+    }
+    // 기록에서 중복 제거해 메뉴 목록 생성
+    var seen = {};
+    items = histAll
+      .filter(function(h) {
+        var key = h.restaurant + '||' + h.menu;
+        if (seen[key]) return false;
+        seen[key] = true;
+        return true;
+      })
+      .map(function(h) {
+        return { menu: h.menu, category: '', tags: '', restaurant: h.restaurant, rating: h.satisfaction || 3, memo: h.memo || '' };
+      });
   }
 
   btn.disabled = true;
