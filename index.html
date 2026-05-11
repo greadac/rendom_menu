@@ -264,6 +264,51 @@
   .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
 
   .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* 가이드 스텝 */
+  .guide-step {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .guide-step:last-of-type { border-bottom: none; }
+  .guide-num {
+    width: 32px; height: 32px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 900; color: white;
+    flex-shrink: 0;
+  }
+  .guide-content { flex: 1; }
+  .guide-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .guide-desc  { font-size: 13px; color: #555; line-height: 1.6; }
+  .guide-code  {
+    margin-top: 8px; padding: 10px 12px;
+    background: #1a1a2e; border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px; color: #a8ff78; line-height: 1.6;
+  }
+
+  /* FAQ */
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 10px; margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .faq-q {
+    padding: 12px 14px; font-size: 13px; font-weight: 700;
+    cursor: pointer; display: flex;
+    justify-content: space-between; align-items: center;
+    user-select: none; background: #fafafa;
+  }
+  .faq-arrow { transition: transform 0.2s; color: var(--text-muted); }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-a {
+    font-size: 13px; color: #555; line-height: 1.7;
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding: 0 14px;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding: 10px 14px 14px; }
 </style>
 </head>
 <body>
@@ -275,9 +320,10 @@
 </div>
 
 <div class="tabs">
-  <div class="tab active" onclick="switchTab('recommend')">🎯 추천받기</div>
-  <div class="tab" onclick="switchTab('record')">📝 기록하기</div>
-  <div class="tab" onclick="switchTab('history')">📋 기록 목록</div>
+  <div class="tab active" onclick="switchTab('recommend')">🎯 추천</div>
+  <div class="tab" onclick="switchTab('record')">📝 기록</div>
+  <div class="tab" onclick="switchTab('history')">📋 목록</div>
+  <div class="tab" onclick="switchTab('settings')">⚙️ 설정</div>
 </div>
 
 <!-- ===== 추천 탭 ===== -->
@@ -321,9 +367,6 @@
   </div>
 
   <div id="rec-result"></div>
-
-  <div class="divider"></div>
-  <button class="btn btn-gray" onclick="initSheets()">🔧 시트 초기화 (최초 1회)</button>
 </div>
 
 <!-- ===== 기록 탭 ===== -->
@@ -401,6 +444,108 @@
   </div>
 </div>
 
+<!-- ===== 설정 탭 ===== -->
+<div id="page-settings" class="page">
+
+  <!-- 메뉴 초기화 -->
+  <div class="card">
+    <div class="card-title">🔧 메뉴 초기화</div>
+    <p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:14px">
+      <span style="color:#e74c3c;font-weight:700">⚠️ 누르면 기존 메뉴 목록이 초기화됩니다.</span>
+    </p>
+    <button class="btn btn-gray" onclick="initSheets(true)" style="margin-bottom:10px">
+      🍱 샘플 메뉴로 초기화
+    </button>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;padding:0 2px">샘플 식당·메뉴 10개가 채워져요. 처음 사용할 때 추천해요.</p>
+    <button class="btn btn-gray" onclick="initSheets(false)">
+      🗂️ 빈 상태로 초기화
+    </button>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:8px;padding:0 2px">메뉴 목록을 비워요. HTML 파일에 직접 식당을 추가할 때 사용하세요.</p>
+  </div>
+
+  <!-- 기록 삭제 -->
+  <div class="card">
+    <div class="card-title">🗑️ 기록 초기화</div>
+    <p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:14px">
+      저장된 식사 기록을 전부 삭제해요.<br>
+      <span style="color:#e74c3c;font-weight:700">⚠️ 삭제된 기록은 복구할 수 없어요.</span>
+    </p>
+    <button class="btn" style="background:#fdedec;color:#e74c3c;font-size:14px" onclick="clearHistory()">🗑️ 식사 기록 전체 삭제</button>
+  </div>
+
+  <!-- 가이드 -->
+  <div class="card">
+    <div class="card-title">📖 사용 가이드</div>
+
+    <div class="guide-step">
+      <div class="guide-num" style="background:linear-gradient(135deg,#27ae60,#2ecc71)">1</div>
+      <div class="guide-content">
+        <div class="guide-title">처음 한 번만 — 초기화</div>
+        <div class="guide-desc">이 탭 → <strong>샘플 메뉴로 초기화</strong> 버튼을 눌러주세요. 추천에 쓸 메뉴 목록이 채워져요.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-num" style="background:linear-gradient(135deg,#e67e22,#f39c12)">2</div>
+      <div class="guide-content">
+        <div class="guide-title">추천받기</div>
+        <div class="guide-desc"><strong>추천 탭</strong>에서 날씨·기분을 선택하고 <strong>추천받기</strong>를 눌러요. 최근 3일 먹은 메뉴는 자동으로 제외돼요.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-num" style="background:linear-gradient(135deg,#3498db,#2980b9)">3</div>
+      <div class="guide-content">
+        <div class="guide-title">식사 기록하기</div>
+        <div class="guide-desc"><strong>기록 탭</strong>에서 먹은 메뉴·식당·만족도를 입력해요. 기록이 쌓일수록 추천이 정확해져요.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-num" style="background:linear-gradient(135deg,#9b59b6,#8e44ad)">4</div>
+      <div class="guide-content">
+        <div class="guide-title">내 식당 추가하기</div>
+        <div class="guide-desc">HTML 파일을 메모장으로 열고 <strong>sampleMenus</strong> 배열에 아래 형식으로 추가하면 돼요.</div>
+        <div class="guide-code">{ menu:"메뉴명", category:"한식",<br>&nbsp;&nbsp;tags:"따뜻함,국물", restaurant:"식당명",<br>&nbsp;&nbsp;rating:4, memo:"메모" },</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="guide-num" style="background:linear-gradient(135deg,#7f8c8d,#636e72)">5</div>
+      <div class="guide-content">
+        <div class="guide-title">데이터 저장 위치</div>
+        <div class="guide-desc">기록은 이 기기의 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 다른 기기에서 열면 기록이 없어요.</div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:10px">❓ 자주 묻는 질문</div>
+
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">추천이 항상 비슷해요 <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">메뉴 목록이 적으면 겹칠 수 있어요. HTML 파일의 sampleMenus에 주변 식당을 10개 이상 추가해보세요!</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">기록이 사라졌어요 <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">기록은 브라우저 로컬 저장소에 저장돼요. 브라우저 데이터 삭제, 시크릿 모드, 다른 기기에서 열면 기록이 없어 보일 수 있어요.</div>
+      </div>
+      <div class="faq-item" onclick="toggleFaq(this)">
+        <div class="faq-q">같은 메뉴를 다른 식당에 등록할 수 있나요? <span class="faq-arrow">▾</span></div>
+        <div class="faq-a">네! sampleMenus에 menu 이름은 같고 restaurant만 다르게 두 줄 추가하면 돼요. 식당+메뉴 조합 단위로 추천해요.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 앱 정보 -->
+  <div class="card" style="text-align:center;padding:24px">
+    <div style="font-size:36px;margin-bottom:8px">🎡</div>
+    <div style="font-size:16px;font-weight:900;margin-bottom:4px">점메추</div>
+    <div style="font-size:12px;color:var(--text-muted)">점심 메뉴 추천기 · HTML 단독 버전</div>
+  </div>
+
+</div>
+
 <script>
 // ===== 상태 =====
 var selectedStar = 3;
@@ -424,10 +569,13 @@ function saveMealHistory(history) {
 }
 
 // ===== 초기 메뉴 데이터 =====
-function initSheets() {
-  if (!confirm("샘플 메뉴 데이터를 초기화할까요?\n기존 메뉴 목록이 초기화됩니다.")) return;
+function initSheets(withSample) {
+  var msg = withSample
+    ? "샘플 메뉴 데이터로 초기화할까요?\n기존 메뉴 목록이 덮어씌워져요."
+    : "메뉴 목록을 빈 상태로 초기화할까요?\n기존 메뉴 목록이 삭제돼요.";
+  if (!confirm(msg)) return;
 
-  const sampleMenus = [
+  var menus = withSample ? [
     { menu:"순대국밥", category:"한식", tags:"따뜻함,국물,든든함", restaurant:"할매국밥",       rating:4,   memo:"국물 진함, 양 많음" },
     { menu:"돼지국밥", category:"한식", tags:"따뜻함,국물,든든함", restaurant:"할매국밥",       rating:4,   memo:"" },
     { menu:"짜장면",   category:"중식", tags:"든든함,면류",         restaurant:"김씨네 중국집", rating:4.5, memo:"점심 할인 있음" },
@@ -438,15 +586,17 @@ function initSheets() {
     { menu:"제육덮밥", category:"한식", tags:"간단함,든든함,빠름", restaurant:"한솥도시락",     rating:3,   memo:"빠르고 저렴" },
     { menu:"크림파스타",category:"양식",tags:"면류,크리미,담백함", restaurant:"파스타공방",     rating:4,   memo:"혼밥하기 좋음" },
     { menu:"토마토파스타",category:"양식",tags:"면류,산뜻함",      restaurant:"파스타공방",     rating:4,   memo:"" },
-  ];
+  ] : [];
 
-  localStorage.setItem('menuList', JSON.stringify(sampleMenus));
-  alert("✅ 초기화 완료!\n메뉴목록이 샘플 데이터로 채워졌어요.\n직접 데이터를 추가하려면 코드의 sampleMenus 배열을 수정하세요.");
+  localStorage.setItem('menuList', JSON.stringify(menus));
+  alert(withSample
+    ? "✅ 샘플 메뉴로 초기화 완료!\n메뉴목록이 10개 채워졌어요."
+    : "✅ 빈 상태로 초기화 완료!\nHTML 파일의 sampleMenus 배열에 식당을 추가해보세요.");
 }
 
 // ===== 탭 전환 =====
 function switchTab(name) {
-  const names = ['recommend','record','history'];
+  const names = ['recommend','record','history','settings'];
   document.querySelectorAll('.tab').forEach((t, i) => {
     t.classList.toggle('active', names[i] === name);
   });
@@ -617,7 +767,19 @@ function showMsg(text, type) {
   setTimeout(function() { el.style.display = 'none'; }, 3000);
 }
 
-// ===== 히스토리 =====
+// ===== 기록 전체 삭제 =====
+function clearHistory() {
+  if (!confirm("식사 기록을 전부 삭제할까요?\n삭제된 기록은 복구할 수 없어요.")) return;
+  localStorage.removeItem('mealHistory');
+  localStorage.removeItem('recHistory');
+  alert("✅ 식사 기록이 모두 삭제됐어요.");
+}
+
+// ===== FAQ 토글 =====
+function toggleFaq(el) {
+  el.classList.toggle('open');
+}
+</script>
 function loadHistory() {
   var history = getMealHistory();
   var el = document.getElementById('history-list');
