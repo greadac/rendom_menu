@@ -20,63 +20,20 @@
     --border: #e8e8e8;
     --radius: 16px;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding-bottom: 90px;
-  }
+  body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 90px; }
 
   /* 헤더 */
-  .header {
-    background: var(--green-dark);
-    padding: 28px 20px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -30px; right: -30px;
-    width: 120px; height: 120px;
-    background: rgba(255,255,255,0.08);
-    border-radius: 50%;
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -20px; left: -20px;
-    width: 80px; height: 80px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 50%;
-  }
+  .header { background: var(--green-dark); padding: 28px 20px 20px; text-align: center; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; background: rgba(255,255,255,0.08); border-radius: 50%; }
+  .header::after  { content: ''; position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; background: rgba(255,255,255,0.06); border-radius: 50%; }
   .header-emoji { font-size: 36px; margin-bottom: 6px; }
   .header h1 { font-size: 24px; font-weight: 900; color: white; letter-spacing: -0.5px; }
   .header p  { font-size: 13px; color: rgba(255,255,255,0.75); margin-top: 4px; }
 
   /* 탭 */
-  .tabs {
-    display: flex;
-    background: white;
-    border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; z-index: 100;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  }
-  .tab {
-    flex: 1; padding: 15px 0;
-    text-align: center;
-    font-size: 14px; font-weight: 700;
-    color: var(--text-muted);
-    cursor: pointer;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
-    user-select: none;
-  }
+  .tabs { display: flex; background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .tab { flex: 1; padding: 13px 0; text-align: center; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; user-select: none; }
   .tab.active { color: var(--green-dark); border-bottom-color: var(--green-dark); }
 
   /* 페이지 */
@@ -84,231 +41,104 @@
   .page.active { display: block; }
 
   /* 카드 */
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 14px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-  .card-title {
-    font-size: 15px; font-weight: 700;
-    color: var(--text); margin-bottom: 16px;
-    display: flex; align-items: center; gap: 6px;
-  }
+  .card { background: var(--card); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
 
   /* 폼 */
   .field { margin-bottom: 14px; }
   .field:last-child { margin-bottom: 0; }
-  label {
-    display: block;
-    font-size: 12px; font-weight: 700;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-  select, input, textarea {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1.5px solid var(--border);
-    border-radius: 10px;
-    font-size: 15px;
-    font-family: 'Noto Sans KR', sans-serif;
-    background: #fafafa;
-    color: var(--text);
-    transition: border-color 0.2s, background 0.2s;
-    -webkit-appearance: none;
-    appearance: none;
-  }
+  label { display: block; font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  select, input, textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 15px; font-family: 'Noto Sans KR', sans-serif; background: #fafafa; color: var(--text); transition: border-color 0.2s, background 0.2s; -webkit-appearance: none; appearance: none; }
   select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-  select:focus, input:focus, textarea:focus {
-    outline: none;
-    border-color: var(--green);
-    background: white;
-  }
+  select:focus, input:focus, textarea:focus { outline: none; border-color: var(--green); background: white; }
   textarea { height: 72px; resize: none; line-height: 1.5; }
 
   /* 별점 */
   .stars { display: flex; gap: 6px; margin-top: 4px; }
-  .star {
-    font-size: 30px; cursor: pointer;
-    filter: grayscale(1) opacity(0.4);
-    transition: filter 0.15s, transform 0.1s;
-    user-select: none;
-  }
+  .star { font-size: 30px; cursor: pointer; filter: grayscale(1) opacity(0.4); transition: filter 0.15s, transform 0.1s; user-select: none; }
   .star.on { filter: grayscale(0) opacity(1); }
   .star:active { transform: scale(1.3); }
 
   /* 버튼 */
-  .btn {
-    width: 100%; padding: 15px;
-    border: none; border-radius: 12px;
-    font-size: 16px; font-weight: 700;
-    font-family: 'Noto Sans KR', sans-serif;
-    cursor: pointer;
-    transition: transform 0.1s, opacity 0.2s, box-shadow 0.2s;
-    letter-spacing: -0.3px;
-  }
+  .btn { width: 100%; padding: 15px; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: transform 0.1s, opacity 0.2s; letter-spacing: -0.3px; }
   .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .btn-green {
-    background: linear-gradient(135deg, var(--green), var(--green-dark));
-    color: white;
-    box-shadow: 0 4px 14px rgba(46,204,113,0.35);
-  }
-  .btn-orange {
-    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
-    color: white;
-    box-shadow: 0 4px 14px rgba(230,126,34,0.35);
-  }
-  .btn-gray {
-    background: #ecf0f1; color: #7f8c8d;
-    font-size: 13px; padding: 12px;
-    box-shadow: none;
-  }
+  .btn-green  { background: linear-gradient(135deg, var(--green), var(--green-dark)); color: white; box-shadow: 0 4px 14px rgba(46,204,113,0.35); }
+  .btn-orange { background: linear-gradient(135deg, var(--orange), var(--orange-dark)); color: white; box-shadow: 0 4px 14px rgba(230,126,34,0.35); }
+  .btn-gray   { background: #ecf0f1; color: #7f8c8d; font-size: 14px; }
+  .btn-danger { background: #fdedec; color: #e74c3c; font-size: 14px; }
 
   /* 추천 결과 */
-  .result-card {
-    background: white;
-    border-radius: var(--radius);
-    margin-bottom: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-    animation: slideUp 0.3s ease both;
-  }
+  .result-card { background: white; border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); animation: slideUp 0.3s ease both; }
   .result-card:nth-child(2) { animation-delay: 0.07s; }
   .result-card:nth-child(3) { animation-delay: 0.14s; }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  .result-header {
-    padding: 10px 16px;
-    display: flex; align-items: center; gap: 8px;
-  }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .result-header { padding: 10px 16px; display: flex; align-items: center; gap: 8px; }
   .rank-1 .result-header { background: linear-gradient(135deg, #e67e22, #d35400); }
   .rank-2 .result-header { background: linear-gradient(135deg, #7f8c8d, #636e72); }
   .rank-3 .result-header { background: linear-gradient(135deg, #95a5a6, #7f8c8d); }
-  .rank-badge {
-    font-size: 20px;
-  }
-  .rank-label {
-    font-size: 13px; font-weight: 700; color: white; opacity: 0.9;
-  }
+  .rank-badge { font-size: 20px; }
+  .rank-label { font-size: 13px; font-weight: 700; color: white; opacity: 0.9; }
   .result-body { padding: 16px; }
   .result-menu { font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -0.5px; }
   .result-rest { font-size: 14px; color: #555; margin-top: 4px; font-weight: 500; }
   .result-meta { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
-  .meta-chip {
-    font-size: 12px; padding: 4px 10px;
-    border-radius: 20px; font-weight: 500;
-  }
+  .meta-chip { font-size: 12px; padding: 4px 10px; border-radius: 20px; font-weight: 500; }
   .chip-rating { background: #fff9e6; color: #f39c12; }
   .chip-tags   { background: #eafaf1; color: #27ae60; }
   .chip-memo   { background: #eaf4fb; color: #2980b9; }
-
-  /* 총평 */
-  .total-comment {
-    text-align: center; padding: 16px;
-    font-size: 14px; color: var(--text-muted);
-    background: white; border-radius: var(--radius);
-    margin-top: 4px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-    animation: slideUp 0.3s ease 0.2s both;
-  }
+  .total-comment { text-align: center; padding: 16px; font-size: 14px; color: var(--text-muted); background: white; border-radius: var(--radius); margin-top: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); animation: slideUp 0.3s ease 0.2s both; }
 
   /* 로딩 */
-  .loading {
-    text-align: center; padding: 40px 20px;
-    color: var(--text-muted);
-  }
-  .spinner {
-    width: 40px; height: 40px; margin: 0 auto 14px;
-    border: 4px solid var(--border);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-  }
+  .loading { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+  .spinner { width: 40px; height: 40px; margin: 0 auto 14px; border: 4px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .loading p { font-size: 14px; }
 
   /* 메시지 */
-  .msg {
-    padding: 12px 14px; border-radius: 10px;
-    font-size: 13px; margin-top: 12px;
-    display: none; font-weight: 500;
-    animation: slideUp 0.2s ease;
-  }
+  .msg { padding: 12px 14px; border-radius: 10px; font-size: 13px; margin-top: 12px; display: none; font-weight: 500; }
   .msg.success { background: #eafaf1; color: #1e8449; border-left: 4px solid var(--green); }
   .msg.error   { background: #fdedec; color: #922b21; border-left: 4px solid #e74c3c; }
 
-  /* 히스토리 */
-  .history-item {
-    display: flex; align-items: center;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
-  }
+  /* 목록 */
+  .history-item { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); gap: 12px; }
   .history-item:last-child { border-bottom: none; }
   .history-date { font-size: 11px; color: var(--text-muted); min-width: 50px; }
   .history-info { flex: 1; }
   .history-menu { font-size: 14px; font-weight: 700; }
   .history-rest { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
   .history-stars { font-size: 12px; }
-
-  .empty-state {
-    text-align: center; padding: 30px;
-    color: var(--text-muted); font-size: 14px;
-  }
+  .empty-state { text-align: center; padding: 30px; color: var(--text-muted); font-size: 14px; }
   .empty-state .icon { font-size: 36px; margin-bottom: 10px; }
 
-  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+  /* 설정 */
+  .setting-block { margin-bottom: 18px; }
+  .setting-block:last-child { margin-bottom: 0; }
+  .setting-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px; }
+  .setting-desc  { font-size: 12px; color: var(--text-muted); margin-top: 7px; line-height: 1.6; }
 
-  /* 가이드 스텝 */
-  .guide-step {
-    display: flex; gap: 14px; align-items: flex-start;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
-  }
+  /* 가이드 */
+  .guide-step { display: flex; gap: 14px; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
   .guide-step:last-of-type { border-bottom: none; }
-  .guide-num {
-    width: 32px; height: 32px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px; font-weight: 900; color: white;
-    flex-shrink: 0;
-  }
+  .guide-num { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; color: white; flex-shrink: 0; }
   .guide-content { flex: 1; }
   .guide-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
   .guide-desc  { font-size: 13px; color: #555; line-height: 1.6; }
-  .guide-code  {
-    margin-top: 8px; padding: 10px 12px;
-    background: #1a1a2e; border-radius: 8px;
-    font-family: 'Courier New', monospace;
-    font-size: 12px; color: #a8ff78; line-height: 1.6;
-  }
+  .guide-code  { margin-top: 8px; padding: 10px 12px; background: #1a1a2e; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 12px; color: #a8ff78; line-height: 1.6; overflow-x: auto; }
 
   /* FAQ */
-  .faq-item {
-    border: 1px solid var(--border);
-    border-radius: 10px; margin-bottom: 8px;
-    overflow: hidden;
-  }
-  .faq-q {
-    padding: 12px 14px; font-size: 13px; font-weight: 700;
-    cursor: pointer; display: flex;
-    justify-content: space-between; align-items: center;
-    user-select: none; background: #fafafa;
-  }
-  .faq-arrow { transition: transform 0.2s; color: var(--text-muted); }
+  .faq-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 8px; overflow: hidden; }
+  .faq-q { padding: 12px 14px; font-size: 13px; font-weight: 700; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; background: #fafafa; }
+  .faq-arrow { transition: transform 0.2s; color: var(--text-muted); font-style: normal; }
   .faq-item.open .faq-arrow { transform: rotate(180deg); }
-  .faq-a {
-    font-size: 13px; color: #555; line-height: 1.7;
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-    padding: 0 14px;
-  }
+  .faq-a { font-size: 13px; color: #555; line-height: 1.7; max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; padding: 0 14px; }
   .faq-item.open .faq-a { max-height: 200px; padding: 10px 14px 14px; }
+
+  /* 앱 정보 */
+  .app-info { text-align: center; padding: 8px 0 4px; }
+  .app-info .app-icon { font-size: 36px; margin-bottom: 8px; }
+  .app-info .app-name { font-size: 16px; font-weight: 900; margin-bottom: 4px; }
+  .app-info .app-sub  { font-size: 12px; color: var(--text-muted); }
 </style>
 </head>
 <body>
@@ -326,11 +156,10 @@
   <div class="tab" onclick="switchTab('settings')">⚙️ 설정</div>
 </div>
 
-<!-- ===== 추천 탭 ===== -->
+<!-- 추천 탭 -->
 <div id="page-recommend" class="page active">
   <div class="card">
     <div class="card-title">🌤 지금 상태를 알려주세요</div>
-
     <div class="field">
       <label>날씨</label>
       <select id="weather">
@@ -342,7 +171,6 @@
         <option value="바람이 많이 부는 날씨">💨 바람</option>
       </select>
     </div>
-
     <div class="field">
       <label>기분 / 컨디션</label>
       <select id="mood">
@@ -355,35 +183,27 @@
         <option value="몸이 좋지 않음">🤒 몸이 안 좋음</option>
       </select>
     </div>
-
     <div class="field">
       <label>기타 조건 <span style="font-weight:400;text-transform:none">(선택)</span></label>
       <textarea id="extra" placeholder="예: 빨리 먹어야 해, 맵게 먹고 싶어..."></textarea>
     </div>
-
-    <button class="btn btn-green" id="rec-btn" onclick="getRecommendation()">
-      추천받기 🎯
-    </button>
+    <button class="btn btn-green" id="rec-btn" onclick="getRecommendation()">추천받기 🎯</button>
   </div>
-
   <div id="rec-result"></div>
 </div>
 
-<!-- ===== 기록 탭 ===== -->
+<!-- 기록 탭 -->
 <div id="page-record" class="page">
   <div class="card">
     <div class="card-title">📝 오늘 점심 기록하기</div>
-
     <div class="field">
       <label>먹은 메뉴</label>
       <input type="text" id="rec-menu" placeholder="예: 짜장면">
     </div>
-
     <div class="field">
       <label>식당명</label>
       <input type="text" id="rec-restaurant" placeholder="예: 김씨네 중국집">
     </div>
-
     <div class="field">
       <label>만족도</label>
       <div class="stars" id="stars">
@@ -394,7 +214,6 @@
         <span class="star" onclick="setStar(5)">⭐</span>
       </div>
     </div>
-
     <div class="field">
       <label>날씨</label>
       <select id="rec-weather">
@@ -405,7 +224,6 @@
         <option value="더움">🌡️ 더움</option>
       </select>
     </div>
-
     <div class="field">
       <label>기분</label>
       <select id="rec-mood">
@@ -415,65 +233,70 @@
         <option value="스트레스">😤 스트레스</option>
       </select>
     </div>
-
     <div class="field">
       <label>메모 <span style="font-weight:400;text-transform:none">(선택)</span></label>
       <textarea id="rec-memo" placeholder="예: 오늘은 좀 짰다, 서비스 좋았음..."></textarea>
     </div>
-
-    <button class="btn btn-orange" id="save-btn" onclick="saveRecord()">
-      기록 저장하기 ✅
-    </button>
+    <button class="btn btn-orange" id="save-btn" onclick="saveRecord()">기록 저장하기 ✅</button>
     <div class="msg" id="save-msg"></div>
   </div>
 </div>
 
-<!-- ===== 히스토리 탭 ===== -->
+<!-- 목록 탭 -->
 <div id="page-history" class="page">
   <div class="card">
     <div class="card-title">📋 최근 식사 기록</div>
     <div id="history-list">
       <div class="empty-state">
         <div class="icon">🍽️</div>
-        <p>기록 탭에서 불러오기를 눌러주세요</p>
+        <p>아직 기록이 없어요</p>
       </div>
     </div>
-    <button class="btn btn-green" style="margin-top:16px" onclick="loadHistory()">
-      기록 불러오기 🔄
-    </button>
+    <button class="btn btn-green" style="margin-top:16px" onclick="loadHistory()">새로고침 🔄</button>
   </div>
 </div>
 
-<!-- ===== 설정 탭 ===== -->
+<!-- 설정 탭 -->
 <div id="page-settings" class="page">
 
-  <!-- 메뉴 초기화 -->
   <div class="card">
     <div class="card-title">🔧 메뉴 초기화</div>
-    <p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:14px">
-      <span style="color:#e74c3c;font-weight:700">⚠️ 누르면 기존 메뉴 목록이 초기화됩니다.</span>
-    </p>
-    <button class="btn btn-gray" onclick="initSheets(true)" style="margin-bottom:10px">
-      🍱 샘플 메뉴로 초기화
-    </button>
-    <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;padding:0 2px">샘플 식당·메뉴 10개가 채워져요. 처음 사용할 때 추천해요.</p>
-    <button class="btn btn-gray" onclick="initSheets(false)">
-      🗂️ 빈 상태로 초기화
-    </button>
-    <p style="font-size:12px;color:var(--text-muted);margin-top:8px;padding:0 2px">메뉴 목록을 비워요. HTML 파일에 직접 식당을 추가할 때 사용하세요.</p>
+    <div class="setting-block">
+      <div class="setting-label">샘플 메뉴로 초기화</div>
+      <button class="btn btn-gray" onclick="initSheets(true)">🍱 샘플 메뉴로 초기화</button>
+      <div class="setting-desc">처음 사용할 때 추천해요. 샘플 식당·메뉴 10개가 채워져요.</div>
+    </div>
+    <div style="height:1px;background:var(--border);margin:16px 0"></div>
+    <div class="setting-block">
+      <div class="setting-label">빈 상태로 초기화</div>
+      <button class="btn btn-gray" onclick="initSheets(false)">🗂️ 빈 상태로 초기화</button>
+      <div class="setting-desc">메뉴 목록을 비워요. HTML 파일에 직접 식당을 추가할 때 사용하세요.</div>
+    </div>
   </div>
 
-  <!-- 기록 삭제 -->
+  <div class="card">
+    <div class="card-title">💾 기록 백업 / 불러오기</div>
+    <div class="setting-block">
+      <div class="setting-label">백업 내보내기</div>
+      <button class="btn btn-gray" onclick="exportBackup()">📤 JSON 파일로 내보내기</button>
+      <div class="setting-desc">식사 기록 전체를 JSON 파일로 저장해요. 다른 기기로 옮길 때 사용하세요.</div>
+    </div>
+    <div style="height:1px;background:var(--border);margin:16px 0"></div>
+    <div class="setting-block">
+      <div class="setting-label">백업 불러오기</div>
+      <button class="btn btn-gray" onclick="document.getElementById('import-file').click()">📥 JSON 파일 불러오기</button>
+      <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(this)">
+      <div class="setting-desc">내보낸 JSON 파일을 선택하면 기록이 복원돼요. 기존 기록에 <strong>합쳐져요</strong> (덮어쓰지 않아요).</div>
+      <div class="msg" id="import-msg"></div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">🗑️ 기록 초기화</div>
-    <p style="font-size:13px;color:#666;line-height:1.7;margin-bottom:14px">
-      저장된 식사 기록을 전부 삭제해요.<br>
-      <span style="color:#e74c3c;font-weight:700">⚠️ 삭제된 기록은 복구할 수 없어요.</span>
-    </p>
-    <button class="btn" style="background:#fdedec;color:#e74c3c;font-size:14px" onclick="clearHistory()">🗑️ 식사 기록 전체 삭제</button>
+    <button class="btn btn-danger" onclick="clearHistory()">🗑️ 식사 기록 전체 삭제</button>
+    <div class="setting-desc" style="color:#e74c3c">삭제된 기록은 복구할 수 없어요.</div>
   </div>
 
-  <!-- 가이드 -->
   <div class="card">
     <div class="card-title">📖 사용 가이드</div>
 
@@ -481,18 +304,16 @@
       <div class="guide-num" style="background:linear-gradient(135deg,#27ae60,#2ecc71)">1</div>
       <div class="guide-content">
         <div class="guide-title">처음 한 번만 — 초기화</div>
-        <div class="guide-desc">이 탭 → <strong>샘플 메뉴로 초기화</strong> 버튼을 눌러주세요. 추천에 쓸 메뉴 목록이 채워져요.</div>
+        <div class="guide-desc">위 <strong>메뉴 초기화</strong> 버튼을 눌러주세요. 추천에 쓸 메뉴 목록이 채워져요.</div>
       </div>
     </div>
-
     <div class="guide-step">
       <div class="guide-num" style="background:linear-gradient(135deg,#e67e22,#f39c12)">2</div>
       <div class="guide-content">
         <div class="guide-title">추천받기</div>
-        <div class="guide-desc"><strong>추천 탭</strong>에서 날씨·기분을 선택하고 <strong>추천받기</strong>를 눌러요. 최근 3일 먹은 메뉴는 자동으로 제외돼요.</div>
+        <div class="guide-desc"><strong>추천 탭</strong>에서 날씨·기분을 선택하고 버튼을 눌러요. 최근 3일 먹은 메뉴는 자동 제외돼요.</div>
       </div>
     </div>
-
     <div class="guide-step">
       <div class="guide-num" style="background:linear-gradient(135deg,#3498db,#2980b9)">3</div>
       <div class="guide-content">
@@ -500,257 +321,240 @@
         <div class="guide-desc"><strong>기록 탭</strong>에서 먹은 메뉴·식당·만족도를 입력해요. 기록이 쌓일수록 추천이 정확해져요.</div>
       </div>
     </div>
-
     <div class="guide-step">
       <div class="guide-num" style="background:linear-gradient(135deg,#9b59b6,#8e44ad)">4</div>
       <div class="guide-content">
         <div class="guide-title">내 식당 추가하기</div>
-        <div class="guide-desc">HTML 파일을 메모장으로 열고 <strong>sampleMenus</strong> 배열에 아래 형식으로 추가하면 돼요.</div>
+        <div class="guide-desc">HTML 파일을 메모장으로 열고 <strong>sampleMenus</strong> 배열에 추가하면 돼요.</div>
         <div class="guide-code">{ menu:"메뉴명", category:"한식",<br>&nbsp;&nbsp;tags:"따뜻함,국물", restaurant:"식당명",<br>&nbsp;&nbsp;rating:4, memo:"메모" },</div>
       </div>
     </div>
-
     <div class="guide-step">
       <div class="guide-num" style="background:linear-gradient(135deg,#7f8c8d,#636e72)">5</div>
       <div class="guide-content">
         <div class="guide-title">데이터 저장 위치</div>
-        <div class="guide-desc">기록은 이 기기의 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 다른 기기에서 열면 기록이 없어요.</div>
+        <div class="guide-desc">기록은 이 기기 브라우저에만 저장돼요. 브라우저 데이터를 지우거나 다른 기기에서 열면 기록이 없어 보여요.</div>
       </div>
     </div>
 
-    <!-- FAQ -->
     <div style="margin-top:20px;border-top:1px solid var(--border);padding-top:16px">
       <div style="font-size:13px;font-weight:700;color:var(--text-muted);margin-bottom:10px">❓ 자주 묻는 질문</div>
-
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">추천이 항상 비슷해요 <span class="faq-arrow">▾</span></div>
+        <div class="faq-q">추천이 항상 비슷해요 <i class="faq-arrow">▾</i></div>
         <div class="faq-a">메뉴 목록이 적으면 겹칠 수 있어요. HTML 파일의 sampleMenus에 주변 식당을 10개 이상 추가해보세요!</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">기록이 사라졌어요 <span class="faq-arrow">▾</span></div>
-        <div class="faq-a">기록은 브라우저 로컬 저장소에 저장돼요. 브라우저 데이터 삭제, 시크릿 모드, 다른 기기에서 열면 기록이 없어 보일 수 있어요.</div>
+        <div class="faq-q">기록이 사라졌어요 <i class="faq-arrow">▾</i></div>
+        <div class="faq-a">기록은 브라우저 로컬 저장소에 저장돼요. 브라우저 데이터 삭제, 시크릿 모드, 다른 기기에서 열면 없어 보일 수 있어요.</div>
       </div>
       <div class="faq-item" onclick="toggleFaq(this)">
-        <div class="faq-q">같은 메뉴를 다른 식당에 등록할 수 있나요? <span class="faq-arrow">▾</span></div>
+        <div class="faq-q">같은 메뉴를 다른 식당에 등록할 수 있나요? <i class="faq-arrow">▾</i></div>
         <div class="faq-a">네! sampleMenus에 menu 이름은 같고 restaurant만 다르게 두 줄 추가하면 돼요. 식당+메뉴 조합 단위로 추천해요.</div>
       </div>
     </div>
   </div>
 
-  <!-- 앱 정보 -->
-  <div class="card" style="text-align:center;padding:24px">
-    <div style="font-size:36px;margin-bottom:8px">🎡</div>
-    <div style="font-size:16px;font-weight:900;margin-bottom:4px">점메추</div>
-    <div style="font-size:12px;color:var(--text-muted)">점심 메뉴 추천기 · HTML 단독 버전</div>
+  <div class="card">
+    <div class="app-info">
+      <div class="app-icon">🎡</div>
+      <div class="app-name">점메추</div>
+      <div class="app-sub">점심 메뉴 추천기 · HTML 단독 버전</div>
+    </div>
   </div>
 
 </div>
 
 <script>
-// ===== 상태 =====
 var selectedStar = 3;
-var mealHistory  = [];
 
-// ===== 로컬 저장소 (메뉴목록 + 식사기록) =====
 function getMenuList() {
-  try {
-    return JSON.parse(localStorage.getItem('menuList') || '[]');
-  } catch(e) { return []; }
+  try { return JSON.parse(localStorage.getItem('menuList') || '[]'); } catch(e) { return []; }
 }
-
 function getMealHistory() {
-  try {
-    return JSON.parse(localStorage.getItem('mealHistory') || '[]');
-  } catch(e) { return []; }
+  try { return JSON.parse(localStorage.getItem('mealHistory') || '[]'); } catch(e) { return []; }
 }
+function saveMealHistory(h) { localStorage.setItem('mealHistory', JSON.stringify(h)); }
 
-function saveMealHistory(history) {
-  localStorage.setItem('mealHistory', JSON.stringify(history));
-}
-
-// ===== 초기 메뉴 데이터 =====
 function initSheets(withSample) {
   var msg = withSample
     ? "샘플 메뉴 데이터로 초기화할까요?\n기존 메뉴 목록이 덮어씌워져요."
     : "메뉴 목록을 빈 상태로 초기화할까요?\n기존 메뉴 목록이 삭제돼요.";
   if (!confirm(msg)) return;
-
   var menus = withSample ? [
-    { menu:"순대국밥", category:"한식", tags:"따뜻함,국물,든든함", restaurant:"할매국밥",       rating:4,   memo:"국물 진함, 양 많음" },
-    { menu:"돼지국밥", category:"한식", tags:"따뜻함,국물,든든함", restaurant:"할매국밥",       rating:4,   memo:"" },
-    { menu:"짜장면",   category:"중식", tags:"든든함,면류",         restaurant:"김씨네 중국집", rating:4.5, memo:"점심 할인 있음" },
-    { menu:"짬뽕",     category:"중식", tags:"국물,매운맛,해산물", restaurant:"김씨네 중국집", rating:4,   memo:"" },
-    { menu:"짜장면",   category:"중식", tags:"든든함,면류",         restaurant:"명동반점",       rating:3.5, memo:"양이 좀 적음" },
-    { menu:"초밥",     category:"일식", tags:"신선함,해산물,담백함",restaurant:"스시로",         rating:3.5, memo:"가격 좀 있음" },
-    { menu:"라멘",     category:"일식", tags:"따뜻함,국물,면류",   restaurant:"스시로",         rating:3.5, memo:"" },
-    { menu:"제육덮밥", category:"한식", tags:"간단함,든든함,빠름", restaurant:"한솥도시락",     rating:3,   memo:"빠르고 저렴" },
-    { menu:"크림파스타",category:"양식",tags:"면류,크리미,담백함", restaurant:"파스타공방",     rating:4,   memo:"혼밥하기 좋음" },
-    { menu:"토마토파스타",category:"양식",tags:"면류,산뜻함",      restaurant:"파스타공방",     rating:4,   memo:"" },
+    { menu:"순대국밥",     category:"한식", tags:"따뜻함,국물,든든함",   restaurant:"할매국밥",       rating:4,   memo:"국물 진함, 양 많음" },
+    { menu:"돼지국밥",     category:"한식", tags:"따뜻함,국물,든든함",   restaurant:"할매국밥",       rating:4,   memo:"" },
+    { menu:"짜장면",       category:"중식", tags:"든든함,면류",           restaurant:"김씨네 중국집", rating:4.5, memo:"점심 할인 있음" },
+    { menu:"짬뽕",         category:"중식", tags:"국물,매운맛,해산물",   restaurant:"김씨네 중국집", rating:4,   memo:"" },
+    { menu:"짜장면",       category:"중식", tags:"든든함,면류",           restaurant:"명동반점",       rating:3.5, memo:"양이 좀 적음" },
+    { menu:"초밥",         category:"일식", tags:"신선함,해산물,담백함", restaurant:"스시로",         rating:3.5, memo:"가격 좀 있음" },
+    { menu:"라멘",         category:"일식", tags:"따뜻함,국물,면류",     restaurant:"스시로",         rating:3.5, memo:"" },
+    { menu:"제육덮밥",     category:"한식", tags:"간단함,든든함,빠름",   restaurant:"한솥도시락",     rating:3,   memo:"빠르고 저렴" },
+    { menu:"크림파스타",   category:"양식", tags:"면류,크리미,담백함",   restaurant:"파스타공방",     rating:4,   memo:"혼밥하기 좋음" },
+    { menu:"토마토파스타", category:"양식", tags:"면류,산뜻함",           restaurant:"파스타공방",     rating:4,   memo:"" }
   ] : [];
-
   localStorage.setItem('menuList', JSON.stringify(menus));
-  alert(withSample
-    ? "✅ 샘플 메뉴로 초기화 완료!\n메뉴목록이 10개 채워졌어요."
-    : "✅ 빈 상태로 초기화 완료!\nHTML 파일의 sampleMenus 배열에 식당을 추가해보세요.");
+  alert(withSample ? "✅ 샘플 메뉴로 초기화 완료!\n메뉴 10개가 채워졌어요." : "✅ 빈 상태로 초기화 완료!");
 }
 
-// ===== 탭 전환 =====
+function clearHistory() {
+  if (!confirm("식사 기록을 전부 삭제할까요?\n삭제된 기록은 복구할 수 없어요.")) return;
+  localStorage.removeItem('mealHistory');
+  localStorage.removeItem('recHistory');
+  alert("✅ 식사 기록이 모두 삭제됐어요.");
+}
+
+function exportBackup() {
+  var history = getMealHistory();
+  if (history.length === 0) { alert("내보낼 기록이 없어요."); return; }
+  var data = { version: 1, exportedAt: new Date().toISOString(), mealHistory: history };
+  var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  var url  = URL.createObjectURL(blob);
+  var a    = document.createElement('a');
+  var d    = new Date();
+  a.href     = url;
+  a.download = '점메추_백업_' + d.getFullYear() + ('0'+(d.getMonth()+1)).slice(-2) + ('0'+d.getDate()).slice(-2) + '.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importBackup(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      var data = JSON.parse(e.target.result);
+      var imported = [];
+      if (Array.isArray(data)) {
+        imported = data;
+      } else if (data.mealHistory && Array.isArray(data.mealHistory)) {
+        imported = data.mealHistory;
+      } else {
+        throw new Error("올바른 백업 파일이 아니에요.");
+      }
+      var existing = getMealHistory();
+      var existingDates = new Set(existing.map(function(h) { return h.date; }));
+      var newItems = imported.filter(function(h) { return !existingDates.has(h.date); });
+      var merged = existing.concat(newItems).sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+      saveMealHistory(merged.slice(0, 200));
+      showImportMsg('✅ ' + newItems.length + '개 기록이 추가됐어요! (중복 ' + (imported.length - newItems.length) + '개 제외)', 'success');
+      input.value = '';
+    } catch(err) {
+      showImportMsg('❌ 오류: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function showImportMsg(text, type) {
+  var el = document.getElementById('import-msg');
+  el.textContent = text;
+  el.className = 'msg ' + type;
+  el.style.display = 'block';
+  setTimeout(function() { el.style.display = 'none'; }, 4000);
+}
+
 function switchTab(name) {
-  const names = ['recommend','record','history','settings'];
-  document.querySelectorAll('.tab').forEach((t, i) => {
+  var names = ['recommend','record','history','settings'];
+  document.querySelectorAll('.tab').forEach(function(t, i) {
     t.classList.toggle('active', names[i] === name);
   });
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById('page-' + name).classList.add('active');
   if (name === 'history') loadHistory();
 }
 
-// ===== 별점 =====
 function setStar(n) {
   selectedStar = n;
-  document.querySelectorAll('.star').forEach((el, i) => {
-    el.classList.toggle('on', i < n);
-  });
+  document.querySelectorAll('.star').forEach(function(el, i) { el.classList.toggle('on', i < n); });
 }
-
-// 초기 별점
 setStar(3);
 
-// ===== 추천 로직 =====
 function getRecommendation() {
-  const weather = document.getElementById('weather').value;
-  const mood    = document.getElementById('mood').value;
-  const extra   = document.getElementById('extra').value;
-  const btn     = document.getElementById('rec-btn');
-  const result  = document.getElementById('rec-result');
+  var weather = document.getElementById('weather').value;
+  var mood    = document.getElementById('mood').value;
+  var btn     = document.getElementById('rec-btn');
+  var result  = document.getElementById('rec-result');
+  var items   = getMenuList();
 
-  const items = getMenuList();
   if (items.length === 0) {
-    result.innerHTML = `<div class="card" style="color:#e74c3c">❌ 메뉴 목록이 없어요.<br>아래 '시트 초기화' 버튼을 눌러주세요.</div>`;
+    result.innerHTML = '<div class="card" style="color:#e74c3c">❌ 메뉴 목록이 없어요.<br>⚙️ 설정 탭에서 초기화해주세요.</div>';
     return;
   }
 
   btn.disabled = true;
   btn.textContent = '분석 중... ⏳';
-  result.innerHTML = `<div class="loading"><div class="spinner"></div><p>최근 기록을 분석하고 있어요</p></div>`;
+  result.innerHTML = '<div class="loading"><div class="spinner"></div><p>최근 기록을 분석하고 있어요</p></div>';
 
-  // 약간의 딜레이로 자연스럽게
   setTimeout(function() {
     try {
-      const history = getMealHistory();
-      const now = new Date();
-
-      // 최근 3일 조합
-      const recent3 = history
-        .filter(h => (now - new Date(h.date)) < 3 * 86400000)
-        .map(h => h.restaurant + '||' + h.menu);
-
-      // 14일 빈도
-      const freq = {};
+      var history = getMealHistory();
+      var now = new Date();
+      var recent3 = history
+        .filter(function(h) { return (now - new Date(h.date)) < 3 * 86400000; })
+        .map(function(h) { return h.restaurant + '||' + h.menu; });
+      var freq = {};
       history
-        .filter(h => (now - new Date(h.date)) < 14 * 86400000)
-        .forEach(h => {
-          const k = h.restaurant + '||' + h.menu;
+        .filter(function(h) { return (now - new Date(h.date)) < 14 * 86400000; })
+        .forEach(function(h) {
+          var k = h.restaurant + '||' + h.menu;
           freq[k] = (freq[k] || 0) + 1;
         });
-
-      let candidates = items
-        .map(i => Object.assign({}, i, {
-          comboKey: i.restaurant + '||' + i.menu,
-          freq: freq[i.restaurant + '||' + i.menu] || 0
-        }))
-        .filter(i => !recent3.includes(i.comboKey))
-        .sort(function(a, b) {
-          if (a.freq !== b.freq) return a.freq - b.freq;
-          return parseFloat(b.rating) - parseFloat(a.rating);
-        });
-
+      var candidates = items
+        .map(function(i) { return Object.assign({}, i, { comboKey: i.restaurant+'||'+i.menu, freq: freq[i.restaurant+'||'+i.menu]||0 }); })
+        .filter(function(i) { return !recent3.includes(i.comboKey); })
+        .sort(function(a, b) { return a.freq !== b.freq ? a.freq-b.freq : parseFloat(b.rating)-parseFloat(a.rating); });
       if (candidates.length < 3) {
-        var extras = items.filter(i => !candidates.find(c => c.comboKey === i.restaurant + '||' + i.menu));
+        var extras = items.filter(function(i) { return !candidates.find(function(c) { return c.comboKey===i.restaurant+'||'+i.menu; }); });
         candidates = candidates.concat(extras);
       }
-
-      candidates.sort(() => Math.random() - 0.5);
+      candidates.sort(function() { return Math.random()-0.5; });
       var picks = candidates.slice(0, 3);
-
       renderResult(picks);
-
-      // 추천기록 로컬 저장
-      var recHistory = JSON.parse(localStorage.getItem('recHistory') || '[]');
-      recHistory.unshift({
-        date: new Date().toISOString(),
-        weather: weather, mood: mood,
-        picks: picks.map(p => p.restaurant + '-' + p.menu)
-      });
-      localStorage.setItem('recHistory', JSON.stringify(recHistory.slice(0, 50)));
-
+      var recH = JSON.parse(localStorage.getItem('recHistory')||'[]');
+      recH.unshift({ date: new Date().toISOString(), weather: weather, mood: mood, picks: picks.map(function(p){return p.restaurant+'-'+p.menu;}) });
+      localStorage.setItem('recHistory', JSON.stringify(recH.slice(0,50)));
     } catch(e) {
-      result.innerHTML = `<div class="card" style="color:#e74c3c">❌ 오류: ${e.message}</div>`;
+      result.innerHTML = '<div class="card" style="color:#e74c3c">❌ 오류: ' + e.message + '</div>';
     }
-
     btn.disabled = false;
     btn.textContent = '다시 추천받기 🔄';
   }, 600);
 }
 
 function renderResult(picks) {
-  const rankBadge = ['🥇','🥈','🥉'];
-  const rankLabel = ['1순위','2순위','3순위'];
-  const rankClass = ['rank-1','rank-2','rank-3'];
-
+  var rankBadge = ['🥇','🥈','🥉'];
+  var rankLabel = ['1순위','2순위','3순위'];
+  var rankClass = ['rank-1','rank-2','rank-3'];
   var html = picks.map(function(p, i) {
     var stars = '⭐'.repeat(Math.round(Number(p.rating)));
-    return `
-      <div class="result-card ${rankClass[i]}">
-        <div class="result-header">
-          <span class="rank-badge">${rankBadge[i]}</span>
-          <span class="rank-label">${rankLabel[i]}</span>
-        </div>
-        <div class="result-body">
-          <div class="result-menu">${p.menu}</div>
-          <div class="result-rest">🏠 ${p.restaurant}</div>
-          <div class="result-meta">
-            <span class="meta-chip chip-rating">${stars} ${p.rating}</span>
-            <span class="meta-chip chip-tags">🏷 ${p.tags}</span>
-            ${p.memo ? `<span class="meta-chip chip-memo">💬 ${p.memo}</span>` : ''}
-          </div>
-        </div>
-      </div>`;
+    return '<div class="result-card '+rankClass[i]+'">' +
+      '<div class="result-header"><span class="rank-badge">'+rankBadge[i]+'</span><span class="rank-label">'+rankLabel[i]+'</span></div>' +
+      '<div class="result-body">' +
+        '<div class="result-menu">'+p.menu+'</div>' +
+        '<div class="result-rest">🏠 '+p.restaurant+'</div>' +
+        '<div class="result-meta">' +
+          '<span class="meta-chip chip-rating">'+stars+' '+p.rating+'</span>' +
+          '<span class="meta-chip chip-tags">🏷 '+p.tags+'</span>' +
+          (p.memo ? '<span class="meta-chip chip-memo">💬 '+p.memo+'</span>' : '') +
+        '</div>' +
+      '</div></div>';
   }).join('');
-
-  html += `<div class="total-comment">🍱 오늘도 맛있는 점심 드세요!</div>`;
+  html += '<div class="total-comment">🍱 오늘도 맛있는 점심 드세요!</div>';
   document.getElementById('rec-result').innerHTML = html;
 }
 
-// ===== 기록 저장 =====
 function saveRecord() {
   var menu       = document.getElementById('rec-menu').value.trim();
   var restaurant = document.getElementById('rec-restaurant').value.trim();
-
-  if (!menu || !restaurant) {
-    showMsg('메뉴와 식당명을 입력해주세요.', 'error');
-    return;
-  }
-
+  if (!menu || !restaurant) { showMsg('메뉴와 식당명을 입력해주세요.', 'error'); return; }
   var btn = document.getElementById('save-btn');
-  btn.disabled = true;
-  btn.textContent = '저장 중...';
-
+  btn.disabled = true; btn.textContent = '저장 중...';
   var history = getMealHistory();
-  history.unshift({
-    date:         new Date().toISOString(),
-    menu:         menu,
-    restaurant:   restaurant,
-    satisfaction: selectedStar,
-    weather:      document.getElementById('rec-weather').value,
-    mood:         document.getElementById('rec-mood').value,
-    memo:         document.getElementById('rec-memo').value
-  });
-  saveMealHistory(history.slice(0, 200));
-
+  history.unshift({ date: new Date().toISOString(), menu: menu, restaurant: restaurant, satisfaction: selectedStar, weather: document.getElementById('rec-weather').value, mood: document.getElementById('rec-mood').value, memo: document.getElementById('rec-memo').value });
+  saveMealHistory(history.slice(0,200));
   setTimeout(function() {
-    btn.disabled = false;
-    btn.textContent = '기록 저장하기 ✅';
+    btn.disabled = false; btn.textContent = '기록 저장하기 ✅';
     showMsg('✅ 저장 완료! 다음 추천에 반영됩니다.', 'success');
     document.getElementById('rec-menu').value = '';
     document.getElementById('rec-restaurant').value = '';
@@ -761,49 +565,31 @@ function saveRecord() {
 
 function showMsg(text, type) {
   var el = document.getElementById('save-msg');
-  el.textContent = text;
-  el.className = 'msg ' + type;
-  el.style.display = 'block';
+  el.textContent = text; el.className = 'msg '+type; el.style.display = 'block';
   setTimeout(function() { el.style.display = 'none'; }, 3000);
 }
 
-// ===== 기록 전체 삭제 =====
-function clearHistory() {
-  if (!confirm("식사 기록을 전부 삭제할까요?\n삭제된 기록은 복구할 수 없어요.")) return;
-  localStorage.removeItem('mealHistory');
-  localStorage.removeItem('recHistory');
-  alert("✅ 식사 기록이 모두 삭제됐어요.");
-}
-
-// ===== FAQ 토글 =====
-function toggleFaq(el) {
-  el.classList.toggle('open');
-}
-</script>
 function loadHistory() {
   var history = getMealHistory();
   var el = document.getElementById('history-list');
-
   if (history.length === 0) {
-    el.innerHTML = `<div class="empty-state"><div class="icon">🍽️</div><p>아직 기록이 없어요</p></div>`;
+    el.innerHTML = '<div class="empty-state"><div class="icon">🍽️</div><p>아직 기록이 없어요</p></div>';
     return;
   }
-
-  el.innerHTML = history.slice(0, 30).map(function(h) {
+  el.innerHTML = history.slice(0,30).map(function(h) {
     var d = new Date(h.date);
-    var dateStr = (d.getMonth()+1) + '/' + d.getDate();
-    var stars = '⭐'.repeat(h.satisfaction || 0);
-    return `
-      <div class="history-item">
-        <div class="history-date">${dateStr}</div>
-        <div class="history-info">
-          <div class="history-menu">${h.menu}</div>
-          <div class="history-rest">${h.restaurant}${h.memo ? ' · ' + h.memo : ''}</div>
-        </div>
-        <div class="history-stars">${stars}</div>
-      </div>`;
+    var dateStr = (d.getMonth()+1)+'/'+d.getDate();
+    var stars = '⭐'.repeat(h.satisfaction||0);
+    return '<div class="history-item">' +
+      '<div class="history-date">'+dateStr+'</div>' +
+      '<div class="history-info"><div class="history-menu">'+h.menu+'</div><div class="history-rest">'+h.restaurant+(h.memo?' · '+h.memo:'')+'</div></div>' +
+      '<div class="history-stars">'+stars+'</div></div>';
   }).join('');
 }
+
+function toggleFaq(el) { el.classList.toggle('open'); }
+
+loadHistory();
 </script>
 </body>
 </html>
