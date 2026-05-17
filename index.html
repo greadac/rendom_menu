@@ -33,7 +33,7 @@
 
   /* 탭 */
   .tabs { display: flex; background: white; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-  .tab { flex: 1; padding: 13px 0; text-align: center; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; user-select: none; }
+  .tab { flex: 1; padding: 13px 0; text-align: center; font-size: 11px; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; user-select: none; }
   .tab.active { color: var(--green-dark); border-bottom-color: var(--green-dark); }
 
   /* 페이지 */
@@ -139,6 +139,32 @@
   .app-info .app-icon { font-size: 36px; margin-bottom: 8px; }
   .app-info .app-name { font-size: 16px; font-weight: 900; margin-bottom: 4px; }
   .app-info .app-sub  { font-size: 12px; color: var(--text-muted); }
+  .app-info .app-credit { font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+  .app-info .app-credit a { color: var(--green-dark); text-decoration: none; font-weight: 700; }
+
+  /* 통계 탭 */
+  .stat-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; overflow: hidden; background: white; }
+  .stat-header { display: flex; align-items: center; padding: 14px 16px; cursor: pointer; user-select: none; gap: 10px; }
+  .stat-header:active { background: #f9f9f9; }
+  .stat-rank { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, var(--green), var(--green-dark)); color: white; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .stat-info { flex: 1; min-width: 0; }
+  .stat-name { font-size: 14px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .stat-sub  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .stat-count { font-size: 22px; font-weight: 900; color: var(--green-dark); flex-shrink: 0; }
+  .stat-count span { font-size: 12px; font-weight: 500; color: var(--text-muted); }
+  .stat-arrow { font-size: 12px; color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; }
+  .stat-item.open .stat-arrow { transform: rotate(180deg); }
+  .stat-dates { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s; padding: 0 16px; border-top: 0px solid var(--border); }
+  .stat-item.open .stat-dates { max-height: 600px; padding: 12px 16px 14px; border-top: 1px solid var(--border); }
+  .date-chip { display: inline-block; background: #eafaf1; color: #1e8449; border-radius: 6px; font-size: 12px; font-weight: 600; padding: 4px 9px; margin: 3px 3px 3px 0; }
+  .date-chip .dc-menu { color: #555; font-weight: 400; margin-left: 4px; }
+  .stat-naver { display: flex; align-items: center; gap: 5px; margin-top: 10px; padding: 7px 12px; background: #03C75A; color: white; border: none; border-radius: 7px; font-size: 12px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: opacity 0.15s; }
+  .stat-naver:active { opacity: 0.8; }
+  .stat-avg { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: #f39c12; background: #fff9e6; border-radius: 6px; padding: 3px 8px; margin-left: 6px; font-weight: 600; }
+  .btn-naver { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; padding: 8px 14px; background: #03C75A; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; text-decoration: none; transition: opacity 0.15s, transform 0.1s; width: 100%; justify-content: center; box-shadow: 0 2px 8px rgba(3,199,90,0.35); }
+  .btn-naver:active { opacity: 0.85; transform: scale(0.97); }
+  .btn-naver-sm { display: inline-flex; align-items: center; gap: 4px; padding: 3px 9px; background: #03C75A; color: white; border: none; border-radius: 6px; font-size: 11px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; text-decoration: none; transition: opacity 0.15s; vertical-align: middle; margin-left: 6px; flex-shrink: 0; }
+  .btn-naver-sm:active { opacity: 0.8; }
 </style>
 </head>
 <body>
@@ -153,6 +179,7 @@
   <div class="tab active" onclick="switchTab('recommend')">🎯 추천</div>
   <div class="tab" onclick="switchTab('record')">📝 기록</div>
   <div class="tab" onclick="switchTab('history')">📋 목록</div>
+  <div class="tab" onclick="switchTab('stats')">📊 통계</div>
   <div class="tab" onclick="switchTab('settings')">⚙️ 설정</div>
 </div>
 
@@ -256,6 +283,16 @@
   </div>
 </div>
 
+<!-- 통계 탭 -->
+<div id="page-stats" class="page">
+  <div class="card">
+    <div class="card-title">📊 식당별 방문 통계</div>
+    <div id="stats-list">
+      <div class="empty-state"><div class="icon">📊</div><p>아직 기록이 없어요</p></div>
+    </div>
+  </div>
+</div>
+
 <!-- 설정 탭 -->
 <div id="page-settings" class="page">
 
@@ -351,6 +388,7 @@
       <div class="app-icon">🎡</div>
       <div class="app-name">점메추</div>
       <div class="app-sub">점심 메뉴 추천기 · HTML 단독 버전</div>
+      <div class="app-credit">제작자 인스타 <a href="https://instagram.com/greada_2" target="_blank">@greada_2</a></div>
     </div>
   </div>
 
@@ -447,13 +485,77 @@ function showImportMsg(text, type) {
 }
 
 function switchTab(name) {
-  var names = ['recommend','record','history','settings'];
+  var names = ['recommend','record','history','stats','settings'];
   document.querySelectorAll('.tab').forEach(function(t, i) {
     t.classList.toggle('active', names[i] === name);
   });
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
   document.getElementById('page-' + name).classList.add('active');
   if (name === 'history') loadHistory();
+  if (name === 'stats') loadStats();
+}
+
+function loadStats() {
+  var history = getMealHistory();
+  var el = document.getElementById('stats-list');
+  if (history.length === 0) {
+    el.innerHTML = '<div class="empty-state"><div class="icon">📊</div><p>아직 기록이 없어요</p></div>';
+    return;
+  }
+
+  // 식당별로 그룹핑
+  var map = {};
+  history.forEach(function(h) {
+    var key = h.restaurant;
+    if (!map[key]) map[key] = { restaurant: key, visits: [], totalSat: 0, satCount: 0 };
+    var d = new Date(h.date);
+    map[key].visits.push({ date: d, menu: h.menu, satisfaction: h.satisfaction });
+    if (h.satisfaction) { map[key].totalSat += h.satisfaction; map[key].satCount++; }
+  });
+
+  // 방문 횟수 내림차순 정렬
+  var list = Object.values(map).sort(function(a, b) { return b.visits.length - a.visits.length; });
+
+  el.innerHTML = list.map(function(r, idx) {
+    var count = r.visits.length;
+    var avgSat = r.satCount > 0 ? (r.totalSat / r.satCount).toFixed(1) : null;
+    var lastVisit = r.visits.slice().sort(function(a,b){ return b.date - a.date; })[0];
+    var lastStr = (lastVisit.date.getMonth()+1) + '/' + lastVisit.date.getDate();
+    var restEsc = r.restaurant.replace(/'/g,"\\'");
+
+    // 날짜 칩: 최신순
+    var chips = r.visits.slice().sort(function(a,b){ return b.date - a.date; }).map(function(v) {
+      var ds = (v.date.getMonth()+1) + '/' + v.date.getDate();
+      return '<span class="date-chip">' + ds + '<span class="dc-menu">' + v.menu + '</span></span>';
+    }).join('');
+
+    var avgHtml = avgSat ? '<span class="stat-avg">⭐ ' + avgSat + '</span>' : '';
+
+    return '<div class="stat-item" id="stat-'+idx+'">' +
+      '<div class="stat-header" onclick="toggleStat('+idx+')">' +
+        '<div class="stat-rank">' + (idx+1) + '</div>' +
+        '<div class="stat-info">' +
+          '<div class="stat-name">' + r.restaurant + avgHtml + '</div>' +
+          '<div class="stat-sub">최근 방문 ' + lastStr + '</div>' +
+        '</div>' +
+        '<div class="stat-count">' + count + '<span>회</span></div>' +
+        '<div class="stat-arrow">▾</div>' +
+      '</div>' +
+      '<div class="stat-dates">' +
+        '<div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:8px">📅 방문 날짜 목록</div>' +
+        chips +
+        '<br><button class="stat-naver" onclick="openNaverMap(\''+restEsc+'\')">' +
+          '<svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>' +
+          '네이버 지도에서 찾기' +
+        '</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function toggleStat(idx) {
+  var el = document.getElementById('stat-' + idx);
+  el.classList.toggle('open');
 }
 
 function setStar(n) {
@@ -530,26 +632,87 @@ function getRecommendation() {
   }, 600);
 }
 
+function naverMapUrl(restaurant) {
+  var query = encodeURIComponent(restaurant);
+  // 모바일: 네이버 지도 앱 딥링크, 실패 시 웹으로 폴백
+  return 'nmap://search?query=' + query + '&appname=com.lunchpick';
+}
+
+function openNaverMap(restaurant) {
+  var query = encodeURIComponent(restaurant);
+  var appUrl = 'nmap://search?query=' + query;
+  var webUrl = 'https://map.naver.com/v5/search/' + query;
+  // 앱 실행 시도 후 일정 시간 내 포커스 안 잃으면 웹으로 폴백
+  var clicked = Date.now();
+  window.location.href = appUrl;
+  setTimeout(function() {
+    if (Date.now() - clicked < 2000) {
+      window.open(webUrl, '_blank');
+    }
+  }, 1200);
+}
+
 function renderResult(picks) {
   var rankBadge = ['🥇','🥈','🥉'];
   var rankLabel = ['1순위','2순위','3순위'];
   var rankClass = ['rank-1','rank-2','rank-3'];
+  var history = getMealHistory();
+
   var html = picks.map(function(p, i) {
     var stars = '⭐'.repeat(Math.round(Number(p.rating)));
+    var restEsc = p.restaurant.replace(/'/g,"\\'");
+
+    // 이 식당 방문 기록 추출 (최신순)
+    var restVisits = history
+      .filter(function(h) { return h.restaurant === p.restaurant; })
+      .sort(function(a,b) { return new Date(b.date) - new Date(a.date); });
+    var visitCount = restVisits.length;
+
+    var visitBadge = visitCount > 0
+      ? '<span style="font-size:12px;background:#eafaf1;color:#1e8449;border-radius:6px;padding:3px 8px;font-weight:700;margin-left:6px;">총 '+visitCount+'회 방문</span>'
+      : '';
+
+    // 날짜 칩 (최대 전체, 접기/펼치기)
+    var dateChips = restVisits.map(function(v) {
+      var d = new Date(v.date);
+      var ds = (d.getMonth()+1)+'/'+(d.getDate());
+      return '<span class="date-chip">'+ds+'<span class="dc-menu">'+v.menu+'</span></span>';
+    }).join('');
+
+    var visitSection = visitCount > 0
+      ? '<div class="visit-toggle" id="vt-'+i+'" style="margin-top:10px">' +
+          '<button onclick="toggleVisitLog('+i+')" style="background:none;border:1px solid var(--border);border-radius:7px;padding:5px 10px;font-size:12px;font-weight:700;color:var(--text-muted);cursor:pointer;font-family:inherit;">📅 방문 기록 보기 ▾</button>' +
+          '<div id="vlog-'+i+'" style="display:none;margin-top:8px">'+dateChips+'</div>' +
+        '</div>'
+      : '';
+
     return '<div class="result-card '+rankClass[i]+'">' +
       '<div class="result-header"><span class="rank-badge">'+rankBadge[i]+'</span><span class="rank-label">'+rankLabel[i]+'</span></div>' +
       '<div class="result-body">' +
         '<div class="result-menu">'+p.menu+'</div>' +
-        '<div class="result-rest">🏠 '+p.restaurant+'</div>' +
+        '<div class="result-rest" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">🏠 '+p.restaurant+visitBadge+'</div>' +
         '<div class="result-meta">' +
           '<span class="meta-chip chip-rating">'+stars+' '+p.rating+'</span>' +
           '<span class="meta-chip chip-tags">🏷 '+p.tags+'</span>' +
           (p.memo ? '<span class="meta-chip chip-memo">💬 '+p.memo+'</span>' : '') +
         '</div>' +
+        visitSection +
+        '<button class="btn-naver" onclick="openNaverMap(\''+restEsc+'\')">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>' +
+          '네이버 지도에서 찾기' +
+        '</button>' +
       '</div></div>';
   }).join('');
   html += '<div class="total-comment">🍱 오늘도 맛있는 점심 드세요!</div>';
   document.getElementById('rec-result').innerHTML = html;
+}
+
+function toggleVisitLog(i) {
+  var log = document.getElementById('vlog-' + i);
+  var btn = document.querySelector('#vt-' + i + ' button');
+  var isOpen = log.style.display !== 'none';
+  log.style.display = isOpen ? 'none' : 'block';
+  btn.textContent = isOpen ? '📅 방문 기록 보기 ▾' : '📅 방문 기록 접기 ▲';
 }
 
 function saveRecord() {
@@ -588,9 +751,14 @@ function loadHistory() {
     var d = new Date(h.date);
     var dateStr = (d.getMonth()+1)+'/'+d.getDate();
     var stars = '⭐'.repeat(h.satisfaction||0);
+    var restEsc = h.restaurant.replace(/'/g,"\\'");
     return '<div class="history-item">' +
       '<div class="history-date">'+dateStr+'</div>' +
-      '<div class="history-info"><div class="history-menu">'+h.menu+'</div><div class="history-rest">'+h.restaurant+(h.memo?' · '+h.memo:'')+'</div></div>' +
+      '<div class="history-info"><div class="history-menu">'+h.menu+'</div>' +
+      '<div class="history-rest" style="display:flex;align-items:center;flex-wrap:wrap;gap:4px">'+h.restaurant+(h.memo?' · '+h.memo:'') +
+      '<button class="btn-naver-sm" onclick="openNaverMap(\''+restEsc+'\')">' +
+        '<svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>지도' +
+      '</button></div></div>' +
       '<div class="history-stars">'+stars+'</div></div>';
   }).join('');
 }
