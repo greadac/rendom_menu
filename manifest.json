@@ -1,0 +1,22 @@
+{
+  "name": "점메추 🎡",
+  "short_name": "점메추",
+  "description": "오늘 점심 뭐 먹지? AI 점심 메뉴 추천",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f0",
+  "theme_color": "#27ae60",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
